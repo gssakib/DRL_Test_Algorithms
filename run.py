@@ -17,7 +17,7 @@ def main():
     head = QHead(n_actions=env.action_space.n, input_dims=[256],name='q_head', chkpt_dir='models')
     actor = Sequential(base, head)
 
-    memory = ReplayBuffer(max_size=100_00, input_shape=env.observation_shape, batch_size=bs, action_space='discrete')
+    memory = ReplayBuffer(max_size=100_00, input_shape=env.observation_space.shape, batch_size=bs, action_space='discrete')
     policy = EpsilonGreedyPolicy(n_actions=env.action_space.n,eps_dec=1e-4)
     agent= Agent(actor, memory, policy)
     ep_loop = EpisodeLoop(agent, env)

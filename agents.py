@@ -1,6 +1,5 @@
 import numpy as np 
 import torch as T 
-import torch.nn.functional as F
 from utils import convert_arrays_to_tensors
 
 class Agent:
@@ -60,7 +59,7 @@ class DQN(Agent):
         self.loss = T.nn.MSELoss()
 
     def choose_action(self, observation):
-        state = T.tensor([observation], dtype=T.float().to(self.device))
+        state = T.tensor([observation], dtype=T.float).to(self.device)
         q_values = self.q_eval(state)
         action = self.policy(q_values)
         return action
