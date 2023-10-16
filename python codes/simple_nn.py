@@ -10,8 +10,16 @@ import matplotlib.pyplot as plt
 # Generate sample data (replace with your own dataset)
 import pandas as pd
 
+# Zero padding to ensure the input data has a fixed shape
+
+def zero_pad_data(data, max_length=50):
+    padded_data = np.zeroes((max_length, data.shape[1]))
+    padded_data[:data.shape[0], :] = data
+    return padded_data
+
 # Load the Excel file and skip a specific column
 csv_file_path_1 = 'E:/grad/thesis/8-18 Experiments/diameter&RPM_SP0.2.CSV'  # Replace with the actual path to your Excel file
+
 
 # Load the Excel sheet, excluding the specified column
 
@@ -38,8 +46,11 @@ print(df_2)
 print(df_3)
 
 features = pd.concat([df_1, df_2, df_3], axis=0)
+
+
 # Assume X_train, y_train, X_test, y_test are your data
 X_train_o, X_test_o, y_train, y_test = train_test_split(features[['Diameter','Setpoint']],features[['Measured_rpm']], test_size=0.2, random_state=42)
+
 
 # Normalize the data
 scaler = preprocessing.StandardScaler().fit(X_train_o)
@@ -49,9 +60,14 @@ X_test = scaler_2.transform(X_test_o)
 # y_train = preprocessing.normalize(y_train)
 # y_test = preprocessing.normalize(y_test)
 
+#padding
+X_train_padded = zero_pad_data(X_train)
+X_test_padded = zero_pad_data(X_train)
+
 # Define a simple neural network model
 model = tf.keras.Sequential([
-    tf.keras.layers.Dense(10, activation='relu', input_shape=(X_train.shape[1],) ),
+    tf.keras.layers.Dense(10, activation='relu', input_shape=(50, X_train.shape[1]) ),
+    tf.keras.layer.Dense(10, activation='relu'),
     tf.keras.layers.Dense(10, activation='relu'),
     tf.keras.layers.Dense(1, activation='linear' )  # Change units for a multi-class problem
 ])
@@ -68,13 +84,13 @@ model.compile(optimizer=custom_optimizer, loss='mean_squared_error')
 model.compile(optimizer='adam', loss='mean_squared_error')
 
 # Train the model
-history = model.fit(X_train, y_train, epochs=10, batch_size=32, validation_split=0.1)
+history = model.fit(X_train_padded, y_train, epochs=10, batch_size=100, validation_split=0.1)
 
 # Evaluate the model on the test set using mean squared error
-predictions = model.predict(X_test)
+predictions = model.predict(X_test_padded)
 mse = mean_squared_error(y_test, predictions)
 print("Mean Squared Error:", mse)
-train_predictions = model.predict(X_train)
+train_predictions = model.predict(X_train_padded)
 
 # Check accuracy within a threshold
 threshold = 10
