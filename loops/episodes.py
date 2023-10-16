@@ -1,5 +1,5 @@
 import numpy as np 
-from utils import clip_reward
+from utils.utils import clip_reward
 
 class EpisodeLoop:
     def __init__(self, agent, env, load_checkpoint=False, clip_reward=False):

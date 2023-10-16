@@ -1,48 +1,6 @@
 import numpy as np 
 import torch as T 
-from utils import convert_arrays_to_tensors
-
-class Agent:
-    def __init__(self, memory, policy, gamma=0.99, tau=0.001):
-        self.memory = memory
-        self.policy = policy
-        self.gamma = gamma
-        self.tau = tau
-        self.networks = []
-
-        self.device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
-
-    def store_transition(self, state, action, reward, state_, done):
-        self.memory.store_transition(state,action, reward, state_,done)
-
-    def sample_memory(self):
-        memory_batch = self.memory.sample_buffer()
-        memory_tensors = convert_arrays_to_tensors(memory_batch, self.device)
-        states, actions, rewards, states_, dones = memory_tensors
-        return states,actions,rewards,states_,dones
-    
-    def save_models(self):
-        for network in self.networks:
-            for x in network: 
-                x.save_checkpoint()
-    
-    def load_models(self):
-        for network in self.networks:
-            for x in network:
-                x.load_checkpoint()
-
-    def update_network_parameters(self, src, dest, tau=None):
-        if tau is None:
-            tau = self.tau
-        
-        for param, target in zip(src.parameters(), dest.parameters()):
-            target.data.copy_(tau*param.data + (1-tau)*target.data)
-
-        def update(self):
-            raise(NotImplementedError)
-        
-        def choose_action(self, observation):
-            raise(NotImplementedError)
+from base import Agent
         
 class DQN(Agent):
     def __init__(self, network, memory, policy, gamma =0.99, lr=1e-4, replace=1000):
