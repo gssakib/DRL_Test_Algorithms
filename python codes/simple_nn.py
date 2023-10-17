@@ -18,7 +18,7 @@ def reshape_data(data, batch_size=50):
     return reshape_data
 
 # Load the Excel file and skip a specific column
-csv_file_path_1 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/Closed_Loop_experiments/8-18 Experiments/diameter&RPM_SP0.2.CSV"  # Replace with the actual path to your Excel file
+csv_file_path_1 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/DDPG Learning Algorithm - Keeghan/DRL_Test_Algorithms/python codes/diameter&RPM_SP0.2.CSV"  # Replace with the actual path to your Excel file
 
 
 # Load the Excel sheet, excluding the specified column
@@ -26,14 +26,14 @@ csv_file_path_1 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/Close
 df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[3,4], nrows=5000)
 df_1['Setpoint'] = 0.2
 
-csv_file_path_2 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/Closed_Loop_experiments/8-18 Experiments/diameter&RPM_SP0.4.CSV"  # Replace with the actual path to your Excel file
+csv_file_path_2 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/DDPG Learning Algorithm - Keeghan/DRL_Test_Algorithms/python codes/diameter&RPM_SP0.4.CSV"  # Replace with the actual path to your Excel file
 
 # Load the Excel sheet, excluding the specified column
 
 df_2 = pd.read_csv(csv_file_path_2, skiprows=13, header=0, usecols=[3,4], nrows=5000)
 df_2['Setpoint'] = 0.4
 
-csv_file_path_3 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/Closed_Loop_experiments/8-18 Experiments/diameter&RPM_SP0.6.CSV"  # Replace with the actual path to your Excel file
+csv_file_path_3 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/DDPG Learning Algorithm - Keeghan/DRL_Test_Algorithms/python codes/diameter&RPM_SP0.6.CSV"   # Replace with the actual path to your Excel file
 
 # Load the Excel sheet, excluding the specified column
 
