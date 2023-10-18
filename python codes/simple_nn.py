@@ -10,30 +10,22 @@ import matplotlib.pyplot as plt
 # Generate sample data (replace with your own dataset)
 import pandas as pd
 
-# Zero padding to ensure the input data has a fixed shape
-
-def reshape_data(data, batch_size=50):
-    num_batches = data.shape[0] // batch_size
-    reshape_data = data[:num_batches * batch_size].reshape(num_batches, batch_size, -1)
-    return reshape_data
-
 # Load the Excel file and skip a specific column
-csv_file_path_1 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/DDPG Learning Algorithm - Keeghan/DRL_Test_Algorithms/python codes/diameter&RPM_SP0.2.CSV"  # Replace with the actual path to your Excel file
-
+csv_file_path_1 = 'E:/grad/thesis/8-18 Experiments/diameter&RPM_SP0.2.CSV'  # Replace with the actual path to your Excel file
 
 # Load the Excel sheet, excluding the specified column
 
 df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[3,4], nrows=5000)
 df_1['Setpoint'] = 0.2
 
-csv_file_path_2 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/DDPG Learning Algorithm - Keeghan/DRL_Test_Algorithms/python codes/diameter&RPM_SP0.4.CSV"  # Replace with the actual path to your Excel file
+csv_file_path_2 = 'E:/grad/thesis/8-18 Experiments/diameter&RPM_SP0.4.CSV'  # Replace with the actual path to your Excel file
 
 # Load the Excel sheet, excluding the specified column
 
 df_2 = pd.read_csv(csv_file_path_2, skiprows=13, header=0, usecols=[3,4], nrows=5000)
 df_2['Setpoint'] = 0.4
 
-csv_file_path_3 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/DDPG Learning Algorithm - Keeghan/DRL_Test_Algorithms/python codes/diameter&RPM_SP0.6.CSV"   # Replace with the actual path to your Excel file
+csv_file_path_3 = 'E:/grad/thesis/8-18 Experiments/diameter&RPM_SP0.6.CSV'  # Replace with the actual path to your Excel file
 
 # Load the Excel sheet, excluding the specified column
 
@@ -46,11 +38,8 @@ print(df_2)
 print(df_3)
 
 features = pd.concat([df_1, df_2, df_3], axis=0)
-
-
 # Assume X_train, y_train, X_test, y_test are your data
 X_train_o, X_test_o, y_train, y_test = train_test_split(features[['Diameter','Setpoint']],features[['Measured_rpm']], test_size=0.2, random_state=42)
-
 
 # Normalize the data
 scaler = preprocessing.StandardScaler().fit(X_train_o)
@@ -60,16 +49,9 @@ X_test = scaler_2.transform(X_test_o)
 # y_train = preprocessing.normalize(y_train)
 # y_test = preprocessing.normalize(y_test)
 
-#padding
-X_train_reshaped = reshape_data(X_train)
-X_test_reshaped = reshape_data(X_test)
-Y_train_reshaped = reshape_data(y_train)
-Y_test_reshaped = reshape_data(y_test)
-
 # Define a simple neural network model
 model = tf.keras.Sequential([
-    tf.keras.layers.Dense(10, activation='relu', input_shape=(50, X_train.shape[1])),
-    tf.keras.layer.Dense(10, activation='relu'),
+    tf.keras.layers.Dense(10, activation='relu', input_shape=(X_train.shape[1],) ),
     tf.keras.layers.Dense(10, activation='relu'),
     tf.keras.layers.Dense(1, activation='linear' )  # Change units for a multi-class problem
 ])
@@ -83,20 +65,20 @@ custom_optimizer = tf.keras.optimizers.Adam(learning_rate=custom_learning_rate)
 # Compile the model using the custom optimizer
 model.compile(optimizer=custom_optimizer, loss='mean_squared_error')
 # Compile the model
-#  model.compile(optimizer='adam', loss='mean_squared_error')
+#model.compile(optimizer='adam', loss='mean_squared_error')
 
 # Train the model
-history = model.fit(X_train_reshaped, Y_train_reshaped, epochs=10, batch_size=100, validation_split=0.1)
+history = model.fit(X_train, y_train, epochs=10, batch_size=32, validation_split=0.1)
 
 # Evaluate the model on the test set using mean squared error
-predictions = model.predict(X_test_reshaped)
-mse = mean_squared_error(Y_test_reshaped, predictions)
+predictions = model.predict(X_test)
+mse = mean_squared_error(y_test, predictions)
 print("Mean Squared Error:", mse)
-train_predictions = model.predict(X_train_reshaped)
+train_predictions = model.predict(X_train)
 
 # Check accuracy within a threshold
 threshold = 10
-correct_predictions = np.abs(predictions.squeeze() - Y_test_reshaped.values.squeeze()) <= threshold
+correct_predictions = np.abs(predictions.squeeze() - y_test.values.squeeze()) <= threshold
 accuracy = np.mean(correct_predictions)
 print("Accuracy within threshold:", accuracy)
 means_values = np.mean(X_train_o, axis = 0)
@@ -110,7 +92,10 @@ df_predictions = pd.DataFrame(predictions)
 df_predictions.to_excel('predictions.xlsx',index = False)
 
 # save the model
-model.save("C:/Users/keegh/Downloads")
+model.save('E:/grad/thesis/8-18 Experiments/model1')
+
+
+
 
 # Retrieve training and validation loss from the history object
 train_loss = history.history['loss']

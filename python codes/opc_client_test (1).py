@@ -1,7 +1,6 @@
 import sys
 sys.path.insert(0, "..")
 from opcua import Client
-from collections import deque
 import time
 import tensorflow as tf
 import numpy as np
@@ -28,8 +27,6 @@ if __name__ == "__main__":
         setpoint = client.get_node("ns=2;s=[opc_server]setpoint_diameter")
         diameter = client.get_node("ns=2;s=[opc_server]Diameter")
         setpoint_speed = client.get_node("ns=2;s=[opc_server]DC_output")
-        memory_storage_d = deque(maxlen=50)
-        memory_storage_s = deque(maxlen=50)
         # print(var.get_value())
         # print("motor_state:", end='')
         # state = input()
@@ -63,7 +60,6 @@ if __name__ == "__main__":
             try: 
                 d = diameter.get_value()
                 s = setpoint.get_value()
-                
 
                 #normalize
                 d_means = 0.42954475
@@ -73,12 +69,11 @@ if __name__ == "__main__":
 
                 d_normalized = (d-d_means)/d_std
                 s_normalized = (s-s_means)/s_std     
-                memory_storage_d.append(d_normalized)
-                memory_storage_s.append(s_normalized)
+                
                 # print(d,d_normalized)
                 # print(type(d_normalized))
                 # print(type(0.5))
-                input = np.array([[list(d_normalized),list(s_normalized)]])
+                input = np.array([[d_normalized,s_normalized]])
                 predictions = model.predict(input)
                 predictions = predictions.squeeze()
                 print(predictions)
