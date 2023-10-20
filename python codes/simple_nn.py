@@ -11,21 +11,21 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Load the Excel file and skip a specific column
-csv_file_path_1 = 'E:/grad/thesis/8-18 Experiments/diameter&RPM_SP0.2.CSV'  # Replace with the actual path to your Excel file
+csv_file_path_1 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/DDPG Learning Algorithm - Keeghan/DRL_Test_Algorithms/python codes/diameter&RPM_SP0.2.CSV"  # Replace with the actual path to your Excel file
 
 # Load the Excel sheet, excluding the specified column
 
 df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[3,4], nrows=5000)
 df_1['Setpoint'] = 0.2
 
-csv_file_path_2 = 'E:/grad/thesis/8-18 Experiments/diameter&RPM_SP0.4.CSV'  # Replace with the actual path to your Excel file
+csv_file_path_2 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/DDPG Learning Algorithm - Keeghan/DRL_Test_Algorithms/python codes/diameter&RPM_SP0.4.CSV"  # Replace with the actual path to your Excel file
 
 # Load the Excel sheet, excluding the specified column
 
 df_2 = pd.read_csv(csv_file_path_2, skiprows=13, header=0, usecols=[3,4], nrows=5000)
 df_2['Setpoint'] = 0.4
 
-csv_file_path_3 = 'E:/grad/thesis/8-18 Experiments/diameter&RPM_SP0.6.CSV'  # Replace with the actual path to your Excel file
+csv_file_path_3 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/DDPG Learning Algorithm - Keeghan/DRL_Test_Algorithms/python codes/diameter&RPM_SP0.6.CSV"  # Replace with the actual path to your Excel file
 
 # Load the Excel sheet, excluding the specified column
 
@@ -68,7 +68,7 @@ model.compile(optimizer=custom_optimizer, loss='mean_squared_error')
 #model.compile(optimizer='adam', loss='mean_squared_error')
 
 # Train the model
-history = model.fit(X_train, y_train, epochs=10, batch_size=32, validation_split=0.1)
+history = model.fit(X_train, y_train, epochs=100, batch_size=32, validation_split=0.1)
 
 # Evaluate the model on the test set using mean squared error
 predictions = model.predict(X_test)
@@ -86,17 +86,18 @@ std_values = np.std(X_train_o,axis = 0)
 print("Means:", scaler.mean_)
 print("Std:", scaler.scale_)
 
-
+"""
 y_test.to_excel('y_test.xlsx',index = False)
 df_predictions = pd.DataFrame(predictions) 
 df_predictions.to_excel('predictions.xlsx',index = False)
+"""
 
 # save the model
-model.save('E:/grad/thesis/8-18 Experiments/model1')
+model.save("C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/DDPG Learning Algorithm - Keeghan/DRL_Test_Algorithms/python codes")
 
 
 
-
+"""
 # Retrieve training and validation loss from the history object
 train_loss = history.history['loss']
 val_loss = history.history['val_loss']
@@ -112,9 +113,7 @@ plt.xlabel('Epochs')
 plt.ylabel('Loss')
 plt.legend()
 plt.show()
-
-
-
+"""
 
 
 

@@ -4,6 +4,7 @@ from opcua import Client
 import time
 import tensorflow as tf
 import numpy as np
+from collections import deque
 
 if __name__ == "__main__":
     client = Client("opc.tcp://DESKTOP-A9QNR1L:4990/FactoryTalkLinxGateway1")
@@ -27,6 +28,19 @@ if __name__ == "__main__":
         setpoint = client.get_node("ns=2;s=[opc_server]setpoint_diameter")
         diameter = client.get_node("ns=2;s=[opc_server]Diameter")
         setpoint_speed = client.get_node("ns=2;s=[opc_server]DC_output")
+
+        setpoint_data = deque(maxlen=32)
+        diameter_data = deque(maxlen=32)
+        setpoint_speed_data = deque(maxlen=32)
+
+        setpoint_data.append(setpoint)
+        diameter_data.append(diameter)
+        setpoint_speed_data.append(setpoint_speed_data)
+
+        setpoint_array = np.array(setpoint_data).reshape(-1, 1)
+        diameter_array = np.array(diameter_data).reshape(-1, 1)
+        setpoint_speed_array = np.array(setpoint_speed_data).reshape(-1, 1)
+
         # print(var.get_value())
         # print("motor_state:", end='')
         # state = input()
@@ -58,8 +72,8 @@ if __name__ == "__main__":
         # var.set_value(0)
         while(True):
             try: 
-                d = diameter.get_value()
-                s = setpoint.get_value()
+                d = diameter_array.get_value()
+                s = setpoint_array.get_value()
 
                 #normalize
                 d_means = 0.42954475
@@ -73,6 +87,7 @@ if __name__ == "__main__":
                 # print(d,d_normalized)
                 # print(type(d_normalized))
                 # print(type(0.5))
+                
                 input = np.array([[d_normalized,s_normalized]])
                 predictions = model.predict(input)
                 predictions = predictions.squeeze()
