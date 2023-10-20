@@ -6,13 +6,13 @@ def convert_arrays_to_tensors(array, device):
         tensors.append(T.tensor(arr).to(device))
     return tensors
 
-def clip_reward(r):
-    if r>1:
+def clip_rpm_prediction(rpm):
+    if rpm>15:
         return 1
-    elif r< -1:
+    elif rpm< -1:
         return -1
     else: 
-        return r
+        return rpm
     
 
 
