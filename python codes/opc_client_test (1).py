@@ -31,15 +31,6 @@ if __name__ == "__main__":
 
         setpoint_data = deque(maxlen=32)
         diameter_data = deque(maxlen=32)
-        setpoint_speed_data = deque(maxlen=32)
-
-        setpoint_data.append(setpoint)
-        diameter_data.append(diameter)
-        setpoint_speed_data.append(setpoint_speed_data)
-
-        setpoint_array = np.array(setpoint_data).reshape(-1, 1)
-        diameter_array = np.array(diameter_data).reshape(-1, 1)
-        setpoint_speed_array = np.array(setpoint_speed_data).reshape(-1, 1)
 
         # print(var.get_value())
         # print("motor_state:", end='')
@@ -75,20 +66,26 @@ if __name__ == "__main__":
                 d = diameter_array.get_value()
                 s = setpoint_array.get_value()
 
+                setpoint_data.append(s)
+                diameter_data.append(d)
+
+                setpoint_array = np.array(setpoint_data).reshape(-1, 1)
+                diameter_array = np.array(diameter_data).reshape(-1, 1)
+
                 #normalize
                 d_means = 0.42954475
                 s_means = 0.40073333
                 d_std = 0.13086448
                 s_std = 0.16299119 
 
-                d_normalized = (d-d_means)/d_std
-                s_normalized = (s-s_means)/s_std     
+                d_normalized = (diameter_array-d_means)/d_std
+                s_normalized = (setpoint_array-s_means)/s_std     
                 
                 # print(d,d_normalized)
                 # print(type(d_normalized))
                 # print(type(0.5))
                 
-                input = np.array([[d_normalized,s_normalized]])
+                input = np.array([d_normalized,s_normalized])
                 predictions = model.predict(input)
                 predictions = predictions.squeeze()
                 print(predictions)
