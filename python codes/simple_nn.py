@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import mean_squared_error
 from sklearn import preprocessing
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 # Generate sample data (replace with your own dataset)
 import pandas as pd
@@ -113,15 +113,6 @@ plt.xlabel('Epochs')
 plt.ylabel('Loss')
 plt.legend()
 plt.show()
-"""
-
-
-
-
-
-
-
-
 
 
 
@@ -153,3 +144,4 @@ ax.axis('off')
 
 plt.title('Neural Network Architecture')
 plt.show()
+"""

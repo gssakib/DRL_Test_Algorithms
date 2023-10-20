@@ -32,6 +32,9 @@ if __name__ == "__main__":
         setpoint_data = deque(maxlen=32)
         diameter_data = deque(maxlen=32)
 
+        setpoint_data.append(np.zeros(32))
+        diameter_data.append(np.zeros(32))
+
         # print(var.get_value())
         # print("motor_state:", end='')
         # state = input()
@@ -61,6 +64,7 @@ if __name__ == "__main__":
         # var.set_value(2)
         # time.sleep(5)
         # var.set_value(0)
+
         while(True):
             try: 
                 d = diameter_array.get_value()
@@ -70,7 +74,9 @@ if __name__ == "__main__":
                 diameter_data.append(d)
 
                 setpoint_array = np.array(setpoint_data).reshape(-1, 1)
+                print('The shape of the set point array is ', setpoint_array.shape())
                 diameter_array = np.array(diameter_data).reshape(-1, 1)
+                print('The shape of the set point array is ', diameter_array.shape())
 
                 #normalize
                 d_means = 0.42954475
