@@ -59,7 +59,7 @@ for epoch in range(num_epochs):
         next_state = Agent.choose_action(state)
 
         #Calculate the reward [Note this reward function may need to be corrected]
-        reward = -abs(X_train-state)
+        reward = -abs(X_train-state) #Yutong: shouldn't the reward be the difference between the state and the set_point?
 
         #Store the experience
         Agent.remember(state, action, reward, next_state)
