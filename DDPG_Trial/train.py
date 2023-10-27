@@ -18,15 +18,15 @@ agent = Agent(alpha=0.00005, beta=0.0005, input_dims=[2], tau=0.001,
 
 #Importing the DataSet
 
-csv_file_path_1 = 'E:/grad/thesis/8-18 Experiments/diameter&RPM_SP0.2.CSV'  # Replace with the actual path to your Excel file
+csv_file_path_1 = "C:/Users/mit-f/Dropbox/_MIT_mengm_2023_plcdeploy_/DRL_Test_Algorithms/diameter&RPM_SP0.2.CSV" # Replace with the actual path to your Excel file
 df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[3,4], nrows=5000) # Load the Excel sheet, excluding the specified column
 df_1['Setpoint'] = 0.2
 
-csv_file_path_2 = 'E:/grad/thesis/8-18 Experiments/diameter&RPM_SP0.4.CSV'  # Replace with the actual path to your Excel file
+csv_file_path_2 = "C:/Users/mit-f/Dropbox/_MIT_mengm_2023_plcdeploy_/DRL_Test_Algorithms/diameter&RPM_SP0.4.CSV"  # Replace with the actual path to your Excel file
 df_2 = pd.read_csv(csv_file_path_2, skiprows=13, header=0, usecols=[3,4], nrows=5000) # Load the Excel sheet, excluding the specified column
 df_2['Setpoint'] = 0.4
 
-csv_file_path_3 = 'E:/grad/thesis/8-18 Experiments/diameter&RPM_SP0.6.CSV'  # Replace with the actual path to your Excel file
+csv_file_path_3 = "C:/Users/mit-f/Dropbox/_MIT_mengm_2023_plcdeploy_/DRL_Test_Algorithms/diameter&RPM_SP0.6.CSV"  # Replace with the actual path to your Excel file
 df_3 = pd.read_csv(csv_file_path_3, skiprows=13, header=0, usecols=[3,4], nrows=5000) # Load the Excel sheet, excluding the specified column
 df_3['Setpoint'] = 0.6
 
