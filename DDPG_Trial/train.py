@@ -18,15 +18,15 @@ agent = Agent(alpha=0.00005, beta=0.0005, input_dims=[2], tau=0.001,
 
 #Importing the DataSet
 
-csv_file_path_1 = "C:/Users/mit-f/Dropbox/_MIT_mengm_2023_plcdeploy_/DRL_Test_Algorithms/diameter&RPM_SP0.2.CSV" # Replace with the actual path to your Excel file
+csv_file_path_1 = "C:/Users/keegh/Documents/Orbtronics Agri Sensor/DRL_Test_Algorithms/diameter&RPM_SP0.2.CSV" # Replace with the actual path to your Excel file
 df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[3,4], nrows=5000) # Load the Excel sheet, excluding the specified column
 df_1['Setpoint'] = 0.2
 
-csv_file_path_2 = "C:/Users/mit-f/Dropbox/_MIT_mengm_2023_plcdeploy_/DRL_Test_Algorithms/diameter&RPM_SP0.4.CSV"  # Replace with the actual path to your Excel file
+csv_file_path_2 = "C:/Users/keegh/Documents/Orbtronics Agri Sensor/DRL_Test_Algorithms/diameter&RPM_SP0.4.CSV"  # Replace with the actual path to your Excel file
 df_2 = pd.read_csv(csv_file_path_2, skiprows=13, header=0, usecols=[3,4], nrows=5000) # Load the Excel sheet, excluding the specified column
 df_2['Setpoint'] = 0.4
 
-csv_file_path_3 = "C:/Users/mit-f/Dropbox/_MIT_mengm_2023_plcdeploy_/DRL_Test_Algorithms/diameter&RPM_SP0.6.CSV"  # Replace with the actual path to your Excel file
+csv_file_path_3 = "C:/Users/keegh/Documents/Orbtronics Agri Sensor/DRL_Test_Algorithms/diameter&RPM_SP0.4.CSV"  # Replace with the actual path to your Excel file
 df_3 = pd.read_csv(csv_file_path_3, skiprows=13, header=0, usecols=[3,4], nrows=5000) # Load the Excel sheet, excluding the specified column
 df_3['Setpoint'] = 0.6
 
@@ -43,31 +43,36 @@ scaler_2 = preprocessing.StandardScaler().fit(X_test_o)
 X_test = scaler_2.transform(X_test_o)
 
 #Training Loop
-num_epochs = 15000
+num_epochs = 20
 X_train = pd.DataFrame(X_train)
 y_train = pd.DataFrame(y_train)
 score_history = []
 
 for epoch in range(num_epochs):
     total_reward = 0
+    counter = 0
     for state, action in zip(X_train.values, y_train.values):
         #Add state and action to an array
-        state = np.array([state])
+        state = np.array(state)
+        state = np.array(state, dtype=np.float32)
+        #state = (state, {})
         action = np.array([action])
-
+                
         #Predict the next state 
-        next_state = Agent.choose_action(state)
+        next_state = agent.choose_action(state)
 
         #Calculate the reward [Note this reward function may need to be corrected]
-        reward = -abs(X_train-state) #Yutong: shouldn't the reward be the difference between the state and the set_point?
+        reward = -abs(state[0]-state[1]) #Yutong: shouldn't the reward be the difference between the state and the set_point?
 
         #Store the experience
-        Agent.remember(state, action, reward, next_state)
+        agent.remember(state, action, reward, next_state)
 
         #Learn from the experience
-        Agent.learn()
+        agent.learn()
 
         total_reward += reward
+        counter += 1
+        print(counter)
 
     score_history.append(total_reward)
 print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
@@ -76,7 +81,7 @@ mse = mean_squared_error(y_train, action)
 print ("Mean Squared Error: ", mse)
 
 #Testing Loop
-num_epochs_testing = 15000
+num_epochs_testing = 20
 X_test = pd.DataFrame(X_test)
 y_test = pd.DataFrame(y_test)
 score_history_testing = []
@@ -89,24 +94,24 @@ for epoch in range(num_epochs):
         action = np.array([action])
 
         #Predict the next state 
-        next_state = Agent.choose_action(state)
+        next_state = agent.choose_action(state)
 
         #Calculate the reward [Note this reward function may need to be corrected]
         reward = -abs(X_test-state)
 
         #Store the experience
-        Agent.remember(state, action, reward, next_state)
+        agent.remember(state, action, reward, next_state)
 
         #Learn from the experience
-        Agent.learn()
+        agent.learn()
 
         total_reward += reward
 
     score_history.append(total_reward)
-print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
+    print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
 
 mse = mean_squared_error(y_test, action)
 print ("Mean Squared Error: ", mse)
 
 #Save the model
-Agent.save_models()
+agent.save_models()

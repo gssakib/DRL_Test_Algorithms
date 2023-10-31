@@ -23,8 +23,7 @@ class OUActionNoise(object):
         self.x_prev = self.x0 if self.x0 is not None else np.zeros_like(self.mu)
 
     def __repr__(self):
-        return 'OrnsteinUhlenbeckActionNoise(mu={}, sigma={})'.format(
-                                                            self.mu, self.sigma)
+        return 'OrnsteinUhlenbeckActionNoise(mu={}, sigma={})'.format(self.mu, self.sigma)
 
 class ReplayBuffer(object):
     def __init__(self, max_size, input_shape, n_actions):
@@ -60,7 +59,7 @@ class ReplayBuffer(object):
 
 class Actor(object):
     def __init__(self, lr, n_actions, name, input_dims, sess, fc1_dims,
-                 fc2_dims, action_bound, batch_size=64, chkpt_dir='tmp/ddpg'):
+                 fc2_dims, action_bound, batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics Agri Sensor/DRL_Test_Algorithms/tmp/ddpg'):
         self.lr = lr
         self.n_actions = n_actions
         self.name = name
@@ -72,47 +71,48 @@ class Actor(object):
         self.sess = sess
         self.action_bound = action_bound
         self.build_network()
-        self.params = tf.trainable_variables(scope=self.name)
-        self.saver = tf.train.Saver()
+        self.params = tf.compat.v1.trainable_variables(scope=self.name)
+        self.saver = tf.compat.v1.train.Saver()
         self.checkpoint_file = os.path.join(chkpt_dir, name +'_ddpg.ckpt')
 
         self.unnormalized_actor_gradients = tf.gradients(
             self.mu, self.params, -self.action_gradient)
 
-        self.actor_gradients = list(map(lambda x: tf.div(x, self.batch_size),
+        self.actor_gradients = list(map(lambda x: tf.compat.v1.div(x, self.batch_size),
                                         self.unnormalized_actor_gradients))
 
-        self.optimize = tf.train.AdamOptimizer(self.lr).\
+        self.optimize = tf.compat.v1.train.AdamOptimizer(self.lr).\
                     apply_gradients(zip(self.actor_gradients, self.params))
 
     def build_network(self):
-        with tf.variable_scope(self.name):
-            self.input = tf.placeholder(tf.float32,
+        with tf.compat.v1.variable_scope(self.name):
+            tf.compat.v1.disable_eager_execution()
+            self.input = tf.compat.v1.placeholder(tf.float32,
                                         shape=[None, *self.input_dims],
                                         name='inputs')
 
-            self.action_gradient = tf.placeholder(tf.float32,
+            self.action_gradient = tf.compat.v1.placeholder(tf.float32,
                                           shape=[None, self.n_actions],
                                           name='gradients')
 
             f1 = 1. / np.sqrt(self.fc1_dims)
-            dense1 = tf.layers.dense(self.input, units=self.fc1_dims,
+            dense1 = tf.compat.v1.layers.dense(self.input, units=self.fc1_dims,
                                      kernel_initializer=random_uniform(-f1, f1),
                                      bias_initializer=random_uniform(-f1, f1))
-            batch1 = tf.layers.batch_normalization(dense1)
+            batch1 = tf.compat.v1.layers.batch_normalization(dense1)
             layer1_activation = tf.nn.relu(batch1)
             f2 = 1. / np.sqrt(self.fc2_dims)
-            dense2 = tf.layers.dense(layer1_activation, units=self.fc2_dims,
+            dense2 = tf.compat.v1.layers.dense(layer1_activation, units=self.fc2_dims,
                                      kernel_initializer=random_uniform(-f2, f2),
                                      bias_initializer=random_uniform(-f2, f2))
-            batch2 = tf.layers.batch_normalization(dense2)
-            layer2_activation = tf.nn.relu(batch2)
+            batch2 = tf.compat.v1.layers.batch_normalization(dense2)
+            layer2_activation = tf.compat.v1.nn.relu(batch2)
             f3 = 0.003
-            mu = tf.layers.dense(layer2_activation, units=self.n_actions,
+            mu = tf.compat.v1.layers.dense(layer2_activation, units=self.n_actions,
                             activation='tanh',
                             kernel_initializer= random_uniform(-f3, f3),
                             bias_initializer=random_uniform(-f3, f3))
-            self.mu = tf.multiply(mu, self.action_bound)
+            self.mu = tf.compat.v1.multiply(mu, self.action_bound)
 
     def predict(self, inputs):
         return self.sess.run(self.mu, feed_dict={self.input: inputs})
@@ -143,53 +143,53 @@ class Critic(object):
         self.batch_size = batch_size
         self.sess = sess
         self.build_network()
-        self.params = tf.trainable_variables(scope=self.name)
-        self.saver = tf.train.Saver()
+        self.params = tf.compat.v1.trainable_variables(scope=self.name)
+        self.saver = tf.compat.v1.train.Saver()
         self.checkpoint_file = os.path.join(chkpt_dir, name +'_ddpg.ckpt')
 
-        self.optimize = tf.train.AdamOptimizer(self.lr).minimize(self.loss)
+        self.optimize = tf.compat.v1.train.AdamOptimizer(self.lr).minimize(self.loss)
 
-        self.action_gradients = tf.gradients(self.q, self.actions)
+        self.action_gradients = tf.compat.v1.gradients(self.q, self.actions)
 
     def build_network(self):
-        with tf.variable_scope(self.name):
-            self.input = tf.placeholder(tf.float32,
+        with tf.compat.v1.variable_scope(self.name):
+            self.input = tf.compat.v1.placeholder(tf.float32,
                                         shape=[None, *self.input_dims],
                                         name='inputs')
 
-            self.actions = tf.placeholder(tf.float32,
+            self.actions = tf.compat.v1.placeholder(tf.float32,
                                           shape=[None, self.n_actions],
                                           name='actions')
 
-            self.q_target = tf.placeholder(tf.float32,
+            self.q_target = tf.compat.v1.placeholder(tf.float32,
                                            shape=[None,1],
                                            name='targets')
 
             f1 = 1. / np.sqrt(self.fc1_dims)
-            dense1 = tf.layers.dense(self.input, units=self.fc1_dims,
+            dense1 = tf.compat.v1.layers.dense(self.input, units=self.fc1_dims,
                                      kernel_initializer=random_uniform(-f1, f1),
                                      bias_initializer=random_uniform(-f1, f1))
-            batch1 = tf.layers.batch_normalization(dense1)
-            layer1_activation = tf.nn.relu(batch1)
+            batch1 = tf.compat.v1.layers.batch_normalization(dense1)
+            layer1_activation = tf.compat.v1.nn.relu(batch1)
 
             f2 = 1. / np.sqrt(self.fc2_dims)
-            dense2 = tf.layers.dense(layer1_activation, units=self.fc2_dims,
+            dense2 = tf.compat.v1.layers.dense(layer1_activation, units=self.fc2_dims,
                                      kernel_initializer=random_uniform(-f2, f2),
                                      bias_initializer=random_uniform(-f2, f2))
-            batch2 = tf.layers.batch_normalization(dense2)
+            batch2 = tf.compat.v1.layers.batch_normalization(dense2)
 
-            action_in = tf.layers.dense(self.actions, units=self.fc2_dims,
+            action_in = tf.compat.v1.layers.dense(self.actions, units=self.fc2_dims,
                                         activation='relu')
-            state_actions = tf.add(batch2, action_in)
-            state_actions = tf.nn.relu(state_actions)
+            state_actions = tf.compat.v1.add(batch2, action_in)
+            state_actions = tf.compat.v1.nn.relu(state_actions)
 
             f3 = 0.003
-            self.q = tf.layers.dense(state_actions, units=1,
+            self.q = tf.compat.v1.layers.dense(state_actions, units=1,
                                kernel_initializer=random_uniform(-f3, f3),
                                bias_initializer=random_uniform(-f3, f3),
                                kernel_regularizer=tf.keras.regularizers.l2(0.01))
 
-            self.loss = tf.losses.mean_squared_error(self.q_target, self.q)
+            self.loss = tf.compat.v1.losses.mean_squared_error(self.q_target, self.q)
 
     def predict(self, inputs, actions):
         return self.sess.run(self.q,
@@ -214,22 +214,22 @@ class Critic(object):
         self.saver.save(self.sess, self.checkpoint_file)
 
 class Agent(object):
-    def __init__(self, alpha, beta, input_dims, tau, env,gamma=0.99, n_actions=2,
+    def __init__(self, alpha, beta, input_dims, tau, gamma=0.99, n_actions=2,
                  max_size=1000000, layer1_size=400, layer2_size=300,
                  batch_size=64):
         self.gamma = gamma
         self.tau = tau
         self.memory = ReplayBuffer(max_size, input_dims, n_actions)
         self.batch_size = batch_size
-        self.sess = tf.Session()
+        self.sess = tf.compat.v1.Session()
         self.actor = Actor(alpha, n_actions, 'Actor', input_dims, self.sess,
-                           layer1_size, layer2_size, env.action_space.high)
+                           layer1_size, layer2_size, 200)
         self.critic = Critic(beta, n_actions, 'Critic', input_dims,self.sess,
                              layer1_size, layer2_size)
 
         self.target_actor = Actor(alpha, n_actions, 'TargetActor',
                                   input_dims, self.sess, layer1_size,
-                                  layer2_size, env.action_space.high)
+                                  layer2_size, 200)
         self.target_critic = Critic(beta, n_actions, 'TargetCritic', input_dims,
                                     self.sess, layer1_size, layer2_size)
 
@@ -249,7 +249,7 @@ class Agent(object):
                     + tf.multiply(self.target_actor.params[i], 1. - self.tau))
          for i in range(len(self.target_actor.params))]
 
-        self.sess.run(tf.global_variables_initializer())
+        self.sess.run(tf.compat.v1.global_variables_initializer())
 
         self.update_network_parameters(first=True)
 
@@ -264,8 +264,8 @@ class Agent(object):
             self.target_critic.sess.run(self.update_critic)
             self.target_actor.sess.run(self.update_actor)
 
-    def remember(self, state, action, reward, new_state):
-        self.memory.store_transition(state, action, reward, new_state)
+    def remember(self, state, action, reward, new_state, done=1):
+        self.memory.store_transition(state, action, reward, new_state, done)
 
     def choose_action(self, state):
         state = state[np.newaxis, :]
@@ -278,7 +278,8 @@ class Agent(object):
     def learn(self):
         if self.memory.mem_cntr < self.batch_size:
             return
-        state, action, reward, new_state = \
+        #print(self.memory.sample_buffer(self.batch_size))
+        state, action, reward, new_state, done = \
                                       self.memory.sample_buffer(self.batch_size)
 
         critic_value_ = self.target_critic.predict(new_state,
