@@ -43,7 +43,7 @@ scaler_2 = preprocessing.StandardScaler().fit(X_test_o)
 X_test = scaler_2.transform(X_test_o)
 
 #Training Loop
-num_epochs = 2
+num_epochs = 5
 X_train = pd.DataFrame(X_train)
 y_train = pd.DataFrame(y_train)
 score_history = []
@@ -62,7 +62,7 @@ for epoch in range(num_epochs):
         next_state = agent.choose_action(state)
 
         #Calculate the reward [Note this reward function may need to be corrected]
-        reward = -abs(state[0]-state[1]) #Yutong: shouldn't the reward be the difference between the state and the set_point?
+        reward = -abs(state[0]-state[1]) #diameter - setpoint
 
         #Store the experience
         agent.remember(state, action, reward, next_state)
@@ -77,27 +77,34 @@ for epoch in range(num_epochs):
     score_history.append(total_reward)
 print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
 
+#print(y_train.shape)
+#print(action.shape)
+
+action = np.full(y_train.shape, action)
 mse = mean_squared_error(y_train, action)
 print ("Mean Squared Error: ", mse)
 
 #Testing Loop
-num_epochs_testing = 2
+num_epochs_testing = 5
 X_test = pd.DataFrame(X_test)
 y_test = pd.DataFrame(y_test)
 score_history_testing = []
 
 for epoch in range(num_epochs):
     total_reward = 0
+    counter= 0
     for state, action in zip(X_test.values, y_test.values):
         #Add state and action to an array
-        state = np.array([state])
+        state = np.array(state)
+        state = np.array(state, dtype=np.float32)
+        #state = (state, {})
         action = np.array([action])
 
         #Predict the next state 
         next_state = agent.choose_action(state)
 
         #Calculate the reward [Note this reward function may need to be corrected]
-        reward = -abs(X_test-state)
+        reward = -abs(state[0]-state[1]) #diameter - set point
 
         #Store the experience
         agent.remember(state, action, reward, next_state)
@@ -106,12 +113,15 @@ for epoch in range(num_epochs):
         agent.learn()
 
         total_reward += reward
+        counter += 1
+        print(counter)
 
     score_history.append(total_reward)
     print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
+    mse = mean_squared_error(y_test, action)
+    print ("Mean Squared Error: ", mse)
 
-mse = mean_squared_error(y_test, action)
-print ("Mean Squared Error: ", mse)
+action = np.full(y_test.shape, action)
 
 #Save the model
 agent.save_models()

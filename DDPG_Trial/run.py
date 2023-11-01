@@ -10,13 +10,17 @@ import numpy as np
 if __name__ == "__main__":
     #Connect to the client
     client = Client("opc.tcp://DESKTOP-A9QNR1L:4990/FactoryTalkLinxGateway1")
+    agent = Agent(alpha=0.00005, beta=0.0005, input_dims=[2], tau=0.001,
+              batch_size=64, layer1_size=800, layer2_size=600,
+              n_actions=1)
+    
     try:
         client.connect()
         root = client.get_root_node()
         setpoint = client.get_node("ns=2;s=[opc_server]setpoint_diameter")
         diameter = client.get_node("ns=2;s=[opc_server]Diameter")
         setpoint_speed = client.get_node("ns=2;s=[opc_server]DC_output")
-        model = Agent.load_models('C:/Users/mit-f/Documents/model2/model1') #input the path address of the model
+        model = agent.load_models() #input the path address of the model
 
         def get_state_from_system():
             s = setpoint.get_value()
