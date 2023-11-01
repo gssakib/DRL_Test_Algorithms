@@ -43,7 +43,7 @@ scaler_2 = preprocessing.StandardScaler().fit(X_test_o)
 X_test = scaler_2.transform(X_test_o)
 
 #Training Loop
-num_epochs = 20
+num_epochs = 2
 X_train = pd.DataFrame(X_train)
 y_train = pd.DataFrame(y_train)
 score_history = []
@@ -81,7 +81,7 @@ mse = mean_squared_error(y_train, action)
 print ("Mean Squared Error: ", mse)
 
 #Testing Loop
-num_epochs_testing = 20
+num_epochs_testing = 2
 X_test = pd.DataFrame(X_test)
 y_test = pd.DataFrame(y_test)
 score_history_testing = []
