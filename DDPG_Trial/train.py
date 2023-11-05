@@ -45,7 +45,7 @@ X_test = scaler_2.transform(X_test_o)
 
 
 #Training Loop
-num_epochs = 10
+num_epochs = 50
 X_train = pd.DataFrame(X_train)
 y_train = pd.DataFrame(y_train)
 score_history = []
@@ -90,7 +90,7 @@ print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
 #print(action.shape)
 
 #Testing Loop
-num_epochs_testing = 1
+num_epochs_testing = 50
 X_test = pd.DataFrame(X_test)
 y_test = pd.DataFrame(y_test)
 score_history_testing = []
