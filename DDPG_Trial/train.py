@@ -45,7 +45,11 @@ X_test = scaler_2.transform(X_test_o)
 
 
 #Training Loop
+<<<<<<< HEAD
 num_epochs = 1
+=======
+num_epochs = 10
+>>>>>>> parent of 38b306a (sadsfd)
 X_train = pd.DataFrame(X_train)
 y_train = pd.DataFrame(y_train)
 score_history = []
