@@ -12,8 +12,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 #Intialize DDPG Agent
-agent = Agent(alpha=0.00005, beta=0.0005, input_dims=[2], tau=0.001,
-              batch_size=64, layer1_size=800, layer2_size=600,
+agent = Agent(alpha=0.00001, beta=0.0001, input_dims=[2], tau=0.0005,
+              batch_size=64, layer1_size=400, layer2_size=300,
               n_actions=1)
 
 #Importing the DataSet
@@ -43,15 +43,7 @@ scaler_2 = preprocessing.StandardScaler().fit(X_test_o)
 X_test = scaler_2.transform(X_test_o)
 
 #Training Loop
-<<<<<<< HEAD
-<<<<<<< HEAD
 num_epochs = 1
-=======
-num_epochs = 10
->>>>>>> parent of 38b306a (sadsfd)
-=======
-num_epochs = 5
->>>>>>> parent of 066a6ba (fghjk)
 X_train = pd.DataFrame(X_train)
 y_train = pd.DataFrame(y_train)
 score_history = []
@@ -59,33 +51,22 @@ score_history = []
 for epoch in range(num_epochs):
     total_reward = 0
     counter = 0
-    predicted_actions = []
     for state, action in zip(X_train.values, y_train.values):
         #Add state and action to an array
         state = np.array(state)
         state = np.array(state, dtype=np.float32)
         #state = (state, {})
         action = np.array([action])
-<<<<<<< HEAD
-        #print("The action is", action)
-        predicted_actions = np.array([predicted_actions])
-        predicted_action = np.array([predicted_actions])
-
-        #Predict the next state 
-        predicted_action = agent.choose_action(state)
-        predicted_actions.append(predicted_action)
-        #print("The prediction of the next state is", next_state)
-=======
                 
         #Predict the next state 
         next_state = agent.choose_action(state)
->>>>>>> parent of 066a6ba (fghjk)
 
         #Calculate the reward [Note this reward function may need to be corrected]
-        reward = -abs(state[0]-state[1]) #diameter - setpoint
+        error =state[0]-state[1] #diameter - setpoint
+        reward = -abs(error**2)
 
         #Store the experience
-        agent.remember(state, action, reward, predicted_action)
+        agent.remember(state, action, reward, next_state)
 
         #Learn from the experience
         agent.learn()
@@ -94,22 +75,8 @@ for epoch in range(num_epochs):
         counter += 1
         print(counter)
 
-<<<<<<< HEAD
-        #Calculate MSE using predicted action and true actions
-        predicted_actions = np.full(y_train.shape, predicted_actions)
-        mse= mean_squared_error(y_train, predicted_actions)
-        print(f"Mean Squared Error on Training Set: {mse}")
-        print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
-
-score_history.append(total_reward)
-
-#mse = mean_squared_error(y_train, action)
-#print ("Mean Squared Error: ", mse)
-#print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')   
-=======
     score_history.append(total_reward)
 print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
->>>>>>> parent of 066a6ba (fghjk)
 
 #print(y_train.shape)
 #print(action.shape)
@@ -117,6 +84,7 @@ print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
 action = np.full(y_train.shape, action)
 mse = mean_squared_error(y_train, action)
 print ("Mean Squared Error: ", mse)
+input()
 
 #Testing Loop
 num_epochs_testing = 5
@@ -127,7 +95,6 @@ score_history_testing = []
 for epoch in range(num_epochs):
     total_reward = 0
     counter= 0
-    predicted_actions = []
     for state, action in zip(X_test.values, y_test.values):
         #Add state and action to an array
         state = np.array(state)
@@ -136,14 +103,14 @@ for epoch in range(num_epochs):
         action = np.array([action])
 
         #Predict the next state 
-        predicted_action = agent.choose_action(state)
-        predicted_actions.append(predicted_action)
+        next_state = agent.choose_action(state)
 
         #Calculate the reward [Note this reward function may need to be corrected]
-        reward = -abs(state[0]-state[1]) #diameter - set point
+        error =state[0]-state[1] #diameter - setpoint
+        reward = -abs(error **2) 
 
         #Store the experience
-        agent.remember(state, action, reward, predicted_action)
+        agent.remember(state, action, reward, next_state)
 
         #Learn from the experience
         agent.learn()
@@ -152,27 +119,11 @@ for epoch in range(num_epochs):
         counter += 1
         print(counter)
 
-<<<<<<< HEAD
-        #Calculate MSE using predicted action and true actions
-        predicted_actions = np.full(y_train.shape, predicted_actions)
-        mse= mean_squared_error(y_train, predicted_actions)
-        print(f"Mean Squared Error on Training Set: {mse}")
-        print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
-
-
-#score_history.append(total_reward)
-#action = np.full(y_test.shape, action)
-#print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
-#mse = mean_squared_error(y_test, action)
-#print ("Mean Squared Error: ", mse)
-=======
-    score_history.append(total_reward)
-    print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
-    mse = mean_squared_error(y_test, action)
-    print ("Mean Squared Error: ", mse)
-
 action = np.full(y_test.shape, action)
->>>>>>> parent of 066a6ba (fghjk)
+score_history.append(total_reward)
+print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
+mse = mean_squared_error(y_test, action)
+print ("Mean Squared Error: ", mse)
 
 #Save the model
 agent.save_models()
