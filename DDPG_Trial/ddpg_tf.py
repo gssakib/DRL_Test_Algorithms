@@ -59,7 +59,7 @@ class ReplayBuffer(object):
 
 class Actor(object):
     def __init__(self, lr, n_actions, name, input_dims, sess, fc1_dims,
-                 fc2_dims, action_bound, batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics Agri Sensor/DRL_Test_Algorithms/tmp/ddpg'):
+                 fc2_dims, action_bound, batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/ddpg'):
         self.lr = lr
         self.n_actions = n_actions
         self.name = name
@@ -132,7 +132,7 @@ class Actor(object):
 
 class Critic(object):
     def __init__(self, lr, n_actions, name, input_dims, sess, fc1_dims, fc2_dims,
-                 batch_size=64, chkpt_dir='tmp/ddpg'):
+                 batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/ddpg'):
         self.lr = lr
         self.n_actions = n_actions
         self.name = name
@@ -205,6 +205,12 @@ class Critic(object):
         return self.sess.run(self.action_gradients,
                              feed_dict={self.input: inputs,
                                         self.actions: actions})
+    def get_loss(self, inputs, actions, q_target):
+        print('Run Session for loss')
+        print(self.sess.run(self.loss, 
+                        feed_dict ={self.input: inputs,
+                                    self.actions: actions,
+                                    self.q_target: q_target}))
     def load_checkpoint(self):
         print("...Loading checkpoint...")
         self.saver.restore(self.sess, self.checkpoint_file)
@@ -290,6 +296,9 @@ class Agent(object):
         target = np.reshape(target, (self.batch_size, 1))
 
         _ = self.critic.train(state, action, target)
+
+        #get loss
+        self.critic.get_loss(state,action, target)
 
         a_outs = self.actor.predict(state)
         grads = self.critic.get_action_gradients(state, a_outs)

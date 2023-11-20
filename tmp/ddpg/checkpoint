@@ -1,0 +1,2 @@
+model_checkpoint_path: "C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/ddpg\\TargetCritic_ddpg.ckpt"
+all_model_checkpoint_paths: "C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/ddpg\\TargetCritic_ddpg.ckpt"

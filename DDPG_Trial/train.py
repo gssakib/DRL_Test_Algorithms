@@ -21,31 +21,31 @@ agent = Agent(alpha=0.00001, beta=0.0001, input_dims=[2], tau=0.0005,
 #data = Import_Data()
 
 csv_file_path_1 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.1Hz_2min/Freq_0.1Hz_2min_Iter01.CSV" # Replace with the actual path to your Excel file
-df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[5,7,8], nrows=5000) # Load the Excel sheet, excluding the specified column
+df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[5,7,8], nrows=500) # Load the Excel sheet, excluding the specified column
 
 csv_file_path_2 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.1Hz_2min/Freq_0.1Hz_2min_Iter02.CSV"  # Replace with the actual path to your Excel file
-df_2 = pd.read_csv(csv_file_path_2, skiprows=13, header=0, usecols=[5,7,8], nrows=5000) # Load the Excel sheet, excluding the specified column
+df_2 = pd.read_csv(csv_file_path_2, skiprows=13, header=0, usecols=[5,7,8], nrows=500) # Load the Excel sheet, excluding the specified column
 
 csv_file_path_3 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.1Hz_2min/Freq_0.1Hz_2min_Iter03.CSV"  # Replace with the actual path to your Excel file
-df_3 = pd.read_csv(csv_file_path_3, skiprows=13, header=0, usecols=[5,7,8], nrows=5000) # Load the Excel sheet, excluding the specified column
+df_3 = pd.read_csv(csv_file_path_3, skiprows=13, header=0, usecols=[5,7,8], nrows=500) # Load the Excel sheet, excluding the specified column
 
 csv_file_path_4 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.2Hz_2min/Freq_0.2Hz_2min_Iter01.CSV" # Replace with the actual path to your Excel file
-df_4 = pd.read_csv(csv_file_path_4, skiprows=13, header=0, usecols=[5,7,8], nrows=5000) # Load the Excel sheet, excluding the specified column
+df_4 = pd.read_csv(csv_file_path_4, skiprows=13, header=0, usecols=[5,7,8], nrows=500) # Load the Excel sheet, excluding the specified column
 
 csv_file_path_5 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.2Hz_2min/Freq_0.2Hz_2min_Iter02.CSV"  # Replace with the actual path to your Excel file
-df_5 = pd.read_csv(csv_file_path_5, skiprows=13, header=0, usecols=[5,7,8], nrows=5000) # Load the Excel sheet, excluding the specified column
+df_5 = pd.read_csv(csv_file_path_5, skiprows=13, header=0, usecols=[5,7,8], nrows=500) # Load the Excel sheet, excluding the specified column
 
 csv_file_path_6 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.2Hz_2min/Freq_0.2Hz_2min_Iter03.CSV"  # Replace with the actual path to your Excel file
-df_6 = pd.read_csv(csv_file_path_6, skiprows=13, header=0, usecols=[5,7,8], nrows=5000) # Load the Excel sheet, excluding the specified column
+df_6 = pd.read_csv(csv_file_path_6, skiprows=13, header=0, usecols=[5,7,8], nrows=500) # Load the Excel sheet, excluding the specified column
 
 csv_file_path_7 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.3Hz_2min/Freq_0.3Hz_2min_Iter01.CSV" # Replace with the actual path to your Excel file
-df_7 = pd.read_csv(csv_file_path_7, skiprows=13, header=0, usecols=[5,7,8], nrows=5000) # Load the Excel sheet, excluding the specified column
+df_7 = pd.read_csv(csv_file_path_7, skiprows=13, header=0, usecols=[5,7,8], nrows=500) # Load the Excel sheet, excluding the specified column
 
 csv_file_path_8 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.3Hz_2min/Freq_0.3Hz_2min_Iter02.CSV"  # Replace with the actual path to your Excel file
-df_8 = pd.read_csv(csv_file_path_8, skiprows=13, header=0, usecols=[5,7,8], nrows=5000) # Load the Excel sheet, excluding the specified column
+df_8 = pd.read_csv(csv_file_path_8, skiprows=13, header=0, usecols=[5,7,8], nrows=500) # Load the Excel sheet, excluding the specified column
 
 csv_file_path_9 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.3Hz_2min/Freq_0.3Hz_2min_Iter03.CSV"  # Replace with the actual path to your Excel file
-df_9 = pd.read_csv(csv_file_path_9, skiprows=13, header=0, usecols=[5,7,8], nrows=5000) # Load the Excel sheet, excluding the specified column
+df_9 = pd.read_csv(csv_file_path_9, skiprows=13, header=0, usecols=[5,7,8], nrows=500) # Load the Excel sheet, excluding the specified column
 
 #Combine DataSet 
 features = pd.concat([df_1,df_2,df_3, df_4,df_5,df_6,df_7,df_8,df_9], axis=0)
@@ -62,7 +62,7 @@ X_test = scaler_2.transform(X_test_o)
 #agent.load_models()
 
 #Training Loop
-num_epochs = 1
+num_epochs = 10
 X_train = pd.DataFrame(X_train_o)
 y_train = pd.DataFrame(y_train)
 X_train = X_train.dropna()
@@ -92,10 +92,10 @@ for epoch in range(num_epochs):
                 
         #Predict the next state 
         next_state = agent.choose_action(state)
-        
+        next_state = 67.5*next_state + 82.5
+        """
         if next_state < 15:
             next_state = next_state + 15
-        """
         elif next_state > 200:
             next_state = 200
         else:
@@ -107,7 +107,7 @@ for epoch in range(num_epochs):
         #Calculate the reward [Note this reward function may need to be corrected]
         error =action-next_state #rpm - predicted rpm
         #print("rpm", action, "predicted_rpm", next_states[0])
-        reward = -abs(error**4)
+        reward = -abs(error)
 
         #Every 200 counts, calculate MSE and reset the predictions list
         #setpoint, diameter+reward
@@ -119,9 +119,9 @@ for epoch in range(num_epochs):
             mse_history.append(batch_mse)
             counter_history.append(counter+1)
             print(counter, "RPM", rpm[0], "predicted rpm ", predicted_rpm[0], "error", error, "reward ", reward, "epoch ", epoch, "/", num_epochs)
-            rpm_value = float(rpm[0])
-            predicted_rpm_value = float(predicted_rpm[0])
-            data_to_export.append([counter, rpm_value, predicted_rpm_value, error, reward, epoch, num_epochs])
+            #rpm_value = float(rpm[0])
+            #predicted_rpm_value = float(predicted_rpm[0])
+            #data_to_export.append([counter, rpm_value, predicted_rpm_value, error, reward, epoch, num_epochs])
             
             #Reset the predictions list for the next batch
             rpm = []
@@ -131,13 +131,13 @@ for epoch in range(num_epochs):
         agent.remember(state, action, reward, next_state)
 
         #Learn from the experience
-        agent.learn()
+        #agent.learn()
 
         total_reward += reward
         counter += 1
         
-df = pd.DataFrame(data_to_export, columns=['Counter', 'RPM', 'Predicted RPM', 'Error', 'Reward', 'Epoch', 'Total Epochs'])
-df.to_csv('training_data.csv', index=False)
+#df = pd.DataFrame(data_to_export, columns=['Counter', 'RPM', 'Predicted RPM', 'Error', 'Reward', 'Epoch', 'Total Epochs'])
+#df.to_csv('training_data.csv', index=False)
 
 score_history.append(total_reward)
 print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
@@ -152,6 +152,7 @@ plt.title('MSE vs. Counter (Every 200 Counts)')
 plt.grid(True)
 plt.show()
 
+"""
 #Plotting the graph of RPM and Predicted RPM vs Counter
 plt.figure(figsize=(10, 5))  # Set the figure size as desired
 plt.plot(counter_history, rpm, label='Setpoint', marker='o')  # Plot actual RPM
@@ -164,9 +165,10 @@ plt.legend()  # Show the legend
 plt.grid(True)  # Show grid
 plt.tight_layout()  # Fit the plot neatly into the figure area
 plt.show()  # Display the plot
+"""
 
 #Testing Loop
-num_epochs_testing = 1
+num_epochs_testing = 10
 X_test = pd.DataFrame(X_test_o)
 y_test = pd.DataFrame(y_test)
 X_test = X_test.dropna()
@@ -194,6 +196,9 @@ for epoch in range(num_epochs):
                 
         #Predict the next state 
         next_state = agent.choose_action(state)
+        next_state = 67.5*next_state + 82.5
+        
+        """
         if next_state < 15:
             next_state = 15
         elif next_state > 200:
@@ -202,10 +207,11 @@ for epoch in range(num_epochs):
             next_state = next_state
         next_states.append(next_state)
         actions.append(action)
+        """
 
         #Calculate the reward [Note this reward function may need to be corrected]
         error =state[0]-state[1] #diameter - setpoint
-        reward = (error)
+        reward = -abs(error)
 
         #Every 200 counts, calculate MSE and reset the predictions list
         #setpoint, diameter+reward
@@ -217,9 +223,9 @@ for epoch in range(num_epochs):
             mse_history.append(batch_mse)
             counter_history.append(counter+1)
             print(counter, "RPM", rpm[0], "predicted rpm ", predicted_rpm[0], "error", error, "reward ", reward, "epoch ", epoch, "/", num_epochs)
-            rpm_value = float(rpm[0])
-            predicted_rpm_value = float(predicted_rpm[0])
-            data_to_export.append([counter, rpm_value, predicted_rpm_value, error, reward, epoch, num_epochs])
+            #rpm_value = float(rpm[0])
+            #predicted_rpm_value = float(predicted_rpm[0])
+            #data_to_export.append([counter, rpm_value, predicted_rpm_value, error, reward, epoch, num_epochs])
             
             #Reset the predictions list for the next batch
             rpm = []
@@ -229,13 +235,13 @@ for epoch in range(num_epochs):
         agent.remember(state, action, reward, next_state)
 
         #Learn from the experience
-        #agent.learn()
+        agent.learn()
 
         total_reward += reward
         counter += 1
         
-df = pd.DataFrame(data_to_export, columns=['Counter', 'RPM', 'Predicted RPM', 'Error', 'Reward', 'Epoch', 'Total Epochs'])
-df.to_csv('training_data.csv', index=False)
+#df = pd.DataFrame(data_to_export, columns=['Counter', 'RPM', 'Predicted RPM', 'Error', 'Reward', 'Epoch', 'Total Epochs'])
+#df.to_csv('training_data.csv', index=False)
 
 score_history.append(total_reward)
 print(f'Epoch {epoch+1}/{num_epochs}, Total Reward: {total_reward}')
@@ -250,6 +256,7 @@ plt.title('MSE vs. Counter (Every 200 Counts)')
 plt.grid(True)
 plt.show()
 
+"""
 #Plotting the graph of RPM and Predicted RPM vs Counter
 plt.figure(figsize=(10, 5))  # Set the figure size as desired
 plt.plot(counter_history, rpm, label='Setpoint', marker='o')  # Plot actual RPM
@@ -262,6 +269,7 @@ plt.legend()  # Show the legend
 plt.grid(True)  # Show grid
 plt.tight_layout()  # Fit the plot neatly into the figure area
 plt.show()  # Display the plot
+"""
 
 #Save the model
 agent.save_models()
