@@ -298,7 +298,7 @@ class Agent(object):
         _ = self.critic.train(state, action, target)
 
         #get loss
-        self.critic.get_loss(state,action, target)
+        #self.critic.get_loss(state,action, target)
 
         a_outs = self.actor.predict(state)
         grads = self.critic.get_action_gradients(state, a_outs)
