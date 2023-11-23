@@ -20,32 +20,32 @@ agent = Agent(alpha=0.00001, beta=0.0001, input_dims=[2], tau=0.0005,
               n_actions=1)
 
 #Importing the DataSet
-csv_file_path_1 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.1Hz_2min/Freq_0.1Hz_2min_Iter01.CSV" # Replace with the actual path to your Excel file
+csv_file_path_1 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/11_8 data/Surebonder_straight_gluestick_data/Freq_0.1Hz_2min/Freq_0.1Hz_2min_Iter01.CSV" # Replace with the actual path to your Excel file
 df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[5,7,8], nrows=13000) # Load the Excel sheet, excluding the specified column
 
-csv_file_path_2 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.1Hz_2min/Freq_0.1Hz_2min_Iter02.CSV"  # Replace with the actual path to your Excel file
+csv_file_path_2 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/11_8 data/Surebonder_straight_gluestick_data/Freq_0.1Hz_2min/Freq_0.1Hz_2min_Iter02.CSV"  # Replace with the actual path to your Excel file
 df_2 = pd.read_csv(csv_file_path_2, skiprows=13, header=0, usecols=[5,7,8], nrows=13000) # Load the Excel sheet, excluding the specified column
 
-csv_file_path_3 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.1Hz_2min/Freq_0.1Hz_2min_Iter03.CSV"  # Replace with the actual path to your Excel file
+csv_file_path_3 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/11_8 data/Surebonder_straight_gluestick_data/Freq_0.1Hz_2min/Freq_0.1Hz_2min_Iter03.CSV"  # Replace with the actual path to your Excel file
 df_3 = pd.read_csv(csv_file_path_3, skiprows=13, header=0, usecols=[5,7,8], nrows=13000) # Load the Excel sheet, excluding the specified column
 
-csv_file_path_4 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.2Hz_2min/Freq_0.2Hz_2min_Iter01.CSV" # Replace with the actual path to your Excel file
+csv_file_path_4 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/11_8 data/Surebonder_straight_gluestick_data/Freq_0.2Hz_2min/Freq_0.2Hz_2min_Iter01.CSV" # Replace with the actual path to your Excel file
 df_4 = pd.read_csv(csv_file_path_4, skiprows=13, header=0, usecols=[5,7,8], nrows=13000) # Load the Excel sheet, excluding the specified column
 
-csv_file_path_5 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.2Hz_2min/Freq_0.2Hz_2min_Iter02.CSV"  # Replace with the actual path to your Excel file
+csv_file_path_5 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/11_8 data/Surebonder_straight_gluestick_data/Freq_0.2Hz_2min/Freq_0.2Hz_2min_Iter02.CSV"  # Replace with the actual path to your Excel file
 df_5 = pd.read_csv(csv_file_path_5, skiprows=13, header=0, usecols=[5,7,8], nrows=13000) # Load the Excel sheet, excluding the specified column
 
-csv_file_path_6 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.2Hz_2min/Freq_0.2Hz_2min_Iter03.CSV"  # Replace with the actual path to your Excel file
+csv_file_path_6 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/11_8 data/Surebonder_straight_gluestick_data/Freq_0.2Hz_2min/Freq_0.2Hz_2min_Iter03.CSV"  # Replace with the actual path to your Excel file
 df_6 = pd.read_csv(csv_file_path_6, skiprows=13, header=0, usecols=[5,7,8], nrows=13000) # Load the Excel sheet, excluding the specified column
 
-csv_file_path_7 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.3Hz_2min/Freq_0.3Hz_2min_Iter01.CSV" # Replace with the actual path to your Excel file
+csv_file_path_7 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/11_8 data/Surebonder_straight_gluestick_data/Freq_0.3Hz_2min/Freq_0.3Hz_2min_Iter01.CSV" # Replace with the actual path to your Excel file
 df_7 = pd.read_csv(csv_file_path_7, skiprows=13, header=0, usecols=[5,7,8], nrows=13000) # Load the Excel sheet, excluding the specified column
 
-csv_file_path_8 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.3Hz_2min/Freq_0.3Hz_2min_Iter02.CSV"  # Replace with the actual path to your Excel file
-df_8 = pd.read_csv(csv_file_path_8, skiprows=13, header=0, usecols=[5,7,8], nrows=13000) # Load the Excel sheet, excluding the specified column
+csv_file_path_8 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/11_8 data/Surebonder_straight_gluestick_data/Freq_0.3Hz_2min/Freq_0.3Hz_2min_Iter02.CSV"  # Replace with the actual path to your Excel file
+df_8 = pd.read_csv(csv_file_path_8, skiprows=13, header=0, usecols=[5,7,8], nrows=100) # Load the Excel sheet, excluding the specified column
 
-csv_file_path_9 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/Surebonder_straight_gluestick_data/Freq_0.3Hz_2min/Freq_0.3Hz_2min_Iter03.CSV"  # Replace with the actual path to your Excel file
-df_9 = pd.read_csv(csv_file_path_9, skiprows=13, header=0, usecols=[5,7,8], nrows=13000) # Load the Excel sheet, excluding the specified column
+csv_file_path_9 = "C:/Users/keegh/Dropbox (MIT)/_MIT_mengm_2023_plcdeploy_/ML Model Training Data/11_8 data/Surebonder_straight_gluestick_data/Freq_0.3Hz_2min/Freq_0.3Hz_2min_Iter03.CSV"  # Replace with the actual path to your Excel file
+df_9 = pd.read_csv(csv_file_path_9, skiprows=13, header=0, usecols=[5,7,8], nrows=100) # Load the Excel sheet, excluding the specified column
 
 #Combine DataSet 
 features = pd.concat([df_1,df_2,df_3, df_4,df_5,df_6,df_7,df_8,df_9], axis=0)
@@ -65,14 +65,13 @@ X_test = scaler_2.transform(X_test_o)
 start_time = time.time()
 
 #Training Loop
-num_epochs = 10
+num_epochs = 20
 X_train = pd.DataFrame(X_train_o)
 y_train = pd.DataFrame(y_train)
 X_train = X_train.dropna()
 y_train = y_train.dropna()
 
 score_history = []
-error_history = []
 counter_history = []
 
 for epoch in range(num_epochs):
@@ -85,15 +84,15 @@ for epoch in range(num_epochs):
                 
         #Select action
         action = agent.choose_action(state)
-        #action = 67.5*action + 82.5
+        action = np.mean(y_train.values)*action + np.std(y_train.values)*2
 
-        if action<15:
+        if action < 15:
             action = 15
         elif action > 200:
             action = 200
         else: 
             action = action
-
+        
         #Observe new state
         if counter+1< X_train.shape[0]:
             new_state = X_train.iloc[counter+1].values
@@ -112,16 +111,15 @@ for epoch in range(num_epochs):
         #Learn from the experience
         agent.learn()
 
-        score += reward
+        score = -reward
         counter += 1
-        print("Count|", counter, "|epoch|", epoch, "/", num_epochs, "|action|", action, "|RPM at t+1|",int(y_train.iloc[counter+1]), "|error", error)
+        print("Count|", counter, "|epoch|", epoch, "/", num_epochs, "|action|", action, "action_raw", agent.choose_action(state), "|RPM at t+1|",int(y_train.iloc[counter+1]), "|error", error)
         
     score_history.append(score)
-    error_history.append(error)
-    print('epoch ', epoch, 'error %.2f' % error,
-              'trailing 100 data points avg %.3f' % np.mean(error_history[-5:]))
-    filename = 'DDPG Training_Avg Error vs Time .png'
-    plotLearning(error_history, filename, window=2)
+    print('epoch ', epoch, 'Score %.2f' % score,
+              'trailing 5 data points avg %.3f' % np.mean(score_history[-20:]))
+filename = 'DDPG Training_Avg Error vs Time .png'
+plotLearning(score_history, filename, window=20)
 
 end_time = time.time()
 duration = (end_time - start_time)/60

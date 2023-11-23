@@ -59,7 +59,7 @@ class ReplayBuffer(object):
 
 class Actor(object):
     def __init__(self, lr, n_actions, name, input_dims, sess, fc1_dims,
-                 fc2_dims, action_bound, batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/ddpg'):
+                 fc2_dims, action_bound, batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/A_0.00001_B_0.0001_ID_2_T_0.0005_BS_64_LS1_600_LS2_400_NA_1_Epoch_20'):
         self.lr = lr
         self.n_actions = n_actions
         self.name = name
@@ -132,7 +132,7 @@ class Actor(object):
 
 class Critic(object):
     def __init__(self, lr, n_actions, name, input_dims, sess, fc1_dims, fc2_dims,
-                 batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/ddpg'):
+                 batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/A_0.00001_B_0.0001_ID_2_T_0.0005_BS_64_LS1_600_LS2_400_NA_1_Epoch_20'):
         self.lr = lr
         self.n_actions = n_actions
         self.name = name
@@ -278,6 +278,13 @@ class Agent(object):
         mu = self.actor.predict(state) # returns list of list
         noise = self.noise()
         mu_prime = mu + noise
+
+        if mu_prime < -0.4:
+            mu_prime = mu_prime/(mu_prime*2.6)
+        elif mu_prime > 0.8: 
+            mu_prime = mu_prime/(mu_prime*1.3)
+        else:
+            mu_prime = mu_prime
 
         return mu_prime[0]
 
