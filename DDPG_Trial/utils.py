@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt 
 import numpy as np
 
-def plotLearning(scores, filename, x=None, window=5):   
+def plotLearning(scores, filename, x=None, window=100):   
     N = len(scores)
     running_avg = np.empty(N)
     for t in range(N):
@@ -12,3 +12,17 @@ def plotLearning(scores, filename, x=None, window=5):
     plt.xlabel('Epoch')                     
     plt.plot(x, running_avg)
     plt.savefig(filename)
+
+def plotRPMandPrediction(rpms,predictions,filename, x=None, window=100):
+    plt.figure(figsize=(10, 6))
+    plt.plot(rpms, label='Actual RPM', color='blue')
+    plt.plot(predictions, label='Predicted RPM', color='red')
+
+    # Adding title and labels
+    plt.title('RPM vs Predicted RPM')
+    plt.xlabel('Time')
+    plt.ylabel('RPM')
+    plt.plot(rpms, predictions)
+    plt.savefig(filename)
+
+#def calculateAccuracy(correctPredictions, totalPredictions):
