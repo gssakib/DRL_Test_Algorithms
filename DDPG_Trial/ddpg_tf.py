@@ -59,7 +59,7 @@ class ReplayBuffer(object):
 
 class Actor(object):
     def __init__(self, lr, n_actions, name, input_dims, sess, fc1_dims,
-                 fc2_dims, action_bound, batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/Model 21'):
+                 fc2_dims, action_bound, batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/Model 27'):
         self.lr = lr
         self.n_actions = n_actions
         self.name = name
@@ -132,7 +132,7 @@ class Actor(object):
 
 class Critic(object):
     def __init__(self, lr, n_actions, name, input_dims, sess, fc1_dims, fc2_dims,
-                 batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/Model 21'):
+                 batch_size=64, chkpt_dir='C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/tmp/Model 27'):
         self.lr = lr
         self.n_actions = n_actions
         self.name = name
