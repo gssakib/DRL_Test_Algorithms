@@ -21,13 +21,13 @@ agent = Agent(alpha=0.000001, beta=0.00001, input_dims=[3], tau=0.005,
 
 #Importing the DataSet
 csv_file_path_1 = "C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/training data/Sinusoid/12-9/freq_0.1_7min.CSV" # Replace with the actual path to your Excel file
-df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[5,7,8,9], nrows=7000) # Load the Excel sheet, excluding the specified column
+df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[5,7,8,9], nrows=25000) # Load the Excel sheet, excluding the specified column
 
 csv_file_path_2 = "C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/training data/Sinusoid/12-9/freq_0.2_7min.CSV" # Replace with the actual path to your Excel file
-df_2 = pd.read_csv(csv_file_path_2, skiprows=13, header=0, usecols=[5,7,8,9], nrows=7000) # Load the Excel sheet, excluding the specified column
+df_2 = pd.read_csv(csv_file_path_2, skiprows=13, header=0, usecols=[5,7,8,9], nrows=25000) # Load the Excel sheet, excluding the specified column
 
 csv_file_path_3 = "C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/training data/Sinusoid/12-9/freq_0.05_7min.CSV" # Replace with the actual path to your Excel file
-df_3 = pd.read_csv(csv_file_path_3, skiprows=13, header=0, usecols=[5,7,8,9], nrows=7000) # Load the Excel sheet, excluding the specified column
+df_3 = pd.read_csv(csv_file_path_3, skiprows=13, header=0, usecols=[5,7,8,9], nrows=25000) # Load the Excel sheet, excluding the specified column
 
 #Combine DataSet 
 features = pd.concat([df_1,df_2, df_3], axis=0)
@@ -42,7 +42,7 @@ scaler_2 = preprocessing.StandardScaler().fit(X_test_o)
 X_test = scaler_2.transform(X_test_o)
 
 #Load Previously saved models
-#agent.load_models()
+agent.load_models()
 
 start_time = time.time()
 
@@ -71,13 +71,16 @@ for epoch in range(num_epochs):
         #Select action
         action = agent.choose_action(state)
         #action = np.mean(y_train.values)*action*2 + np.std(y_train.values)*2
-        d = np.array(y_train.max())-np.array(y_train.min())
+        #d = np.array(y_train.max())-np.array(y_train.min())
+        d = 250 - 50 #Hard coded max and minimum range of the spooling motor
         action = ((action+0.4)/0.75)*d + np.array(y_train.min())
+        #print('max', y_train.max(), 'min', y_train.min())
+        #input()
 
         if action < 15:
-            action = np.array([action[0]+50])
-        elif action > 200:
-            action = np.array([action[0]-50])
+            action = np.array([action[0]+100])
+        elif action > 300:
+            action = np.array([action[0]-100])
         
         #Observe new state
         if counter+1< X_train.shape[0]:
