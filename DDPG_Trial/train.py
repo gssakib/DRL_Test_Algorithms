@@ -20,20 +20,14 @@ agent = Agent(alpha=0.000001, beta=0.00001, input_dims=[3], tau=0.005,
               n_actions=1)
 
 #Importing the DataSet
-csv_file_path_1 = "C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/training data/Sinusoid/12-9/freq_0.1_7min.CSV" # Replace with the actual path to your Excel file
-df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[5,7,8,9], nrows=25000) # Load the Excel sheet, excluding the specified column
-
-csv_file_path_2 = "C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/training data/Sinusoid/12-9/freq_0.2_7min.CSV" # Replace with the actual path to your Excel file
-df_2 = pd.read_csv(csv_file_path_2, skiprows=13, header=0, usecols=[5,7,8,9], nrows=25000) # Load the Excel sheet, excluding the specified column
-
-csv_file_path_3 = "C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/training data/Sinusoid/12-9/freq_0.05_7min.CSV" # Replace with the actual path to your Excel file
-df_3 = pd.read_csv(csv_file_path_3, skiprows=13, header=0, usecols=[5,7,8,9], nrows=25000) # Load the Excel sheet, excluding the specified column
+csv_file_path_1 = "C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/training data/Random Step/random_ramp_test_17min.CSV" # Replace with the actual path to your Excel file
+df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[3,4,6,7], nrows=60000) # Load the Excel sheet, excluding the specified column
 
 #Combine DataSet 
-features = pd.concat([df_1,df_2, df_3], axis=0)
+features = pd.concat([df_1], axis=0)
 
 # Assume X_train, y_train, X_test, y_test are your data
-X_train_o, X_test_o, y_train, y_test = train_test_split(features[['Setpoint','Diameter','Preform_Idler_Speed']],features[['Measured_rpm_Filtered']], test_size=0.1, random_state=42, shuffle=False)
+X_train_o, X_test_o, y_train, y_test = train_test_split(features[['Diameter','Setpoint','Preform_Idler_Speed']],features[['Measured_rpm_Filtered']], test_size=0.1, random_state=42, shuffle=False)
 
 #Normalize the Data
 scaler = preprocessing.StandardScaler().fit(X_train_o)
@@ -47,7 +41,7 @@ agent.load_models()
 start_time = time.time()
 
 #Training Loop
-num_epochs = 10
+num_epochs = 1
 X_train = pd.DataFrame(X_train_o)
 y_train = pd.DataFrame(y_train)
 X_train = X_train.dropna()
@@ -108,7 +102,7 @@ for epoch in range(num_epochs):
         agent.remember(state, action, reward, new_state)
 
         #Learn from the experience
-        agent.learn()
+        #agent.learn()
 
         score = -reward
         
@@ -134,5 +128,5 @@ duration = (end_time - start_time)/60
 print("Time taken to train the model", duration, "mins")
 
 #Save the model
-agent.save_models()
+#agent.save_models()
 
