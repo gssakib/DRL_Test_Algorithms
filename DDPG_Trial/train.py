@@ -23,6 +23,7 @@ agent = Agent(alpha=0.000001, beta=0.00001, input_dims=[3], tau=0.005,
 csv_file_path_1 = "C:/Users/keegh/Documents/Orbtronics_Agri_Sensor/DRL_Test_Algorithms/training data/Random Step/random_ramp_test_17min.CSV" # Replace with the actual path to your Excel file
 df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[3,4,6,7], nrows=60000) # Load the Excel sheet, excluding the specified column
 
+
 #Combine DataSet 
 features = pd.concat([df_1], axis=0)
 
@@ -128,5 +129,5 @@ duration = (end_time - start_time)/60
 print("Time taken to train the model", duration, "mins")
 
 #Save the model
-#agent.save_models()
+agent.save_models()
 
