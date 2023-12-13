@@ -37,12 +37,12 @@ scaler_2 = preprocessing.StandardScaler().fit(X_test_o)
 X_test = scaler_2.transform(X_test_o)
 
 #Load Previously saved models
-agent.load_models()
+#agent.load_models()
 
 start_time = time.time()
 
 #Training Loop
-num_epochs = 1
+num_epochs = 2
 X_train = pd.DataFrame(X_train_o)
 y_train = pd.DataFrame(y_train)
 X_train = X_train.dropna()
@@ -103,7 +103,7 @@ for epoch in range(num_epochs):
         agent.remember(state, action, reward, new_state)
 
         #Learn from the experience
-        #agent.learn()
+        agent.learn()
 
         score = -reward
         

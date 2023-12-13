@@ -18,7 +18,7 @@ def plotRPMandPrediction(rpms,predictions,filename, x=None, window=100):
         x= range(len(rpms))
     
     #Thin the data by plotting every 100th point 
-    thin_factor = 100
+    thin_factor = 1000
     x_thinned = x[::thin_factor]
     rpms_thinned = rpms[::thin_factor]
     predictions_thinned = predictions[::thin_factor]
