@@ -1,0 +1,2 @@
+model_checkpoint_path: "C:\\Users\\sakib\\Documents\\DRL_Test_Algorithms\\tmp\\Model 30\\TargetCritic_ddpg.ckpt"
+all_model_checkpoint_paths: "C:\\Users\\sakib\\Documents\\DRL_Test_Algorithms\\tmp\\Model 30\\TargetCritic_ddpg.ckpt"
