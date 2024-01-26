@@ -15,6 +15,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from data import Import_Data
 from utils import plotLearning, plotRPMandPrediction
+from keras.utils import to_categorical
+
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -49,32 +51,33 @@ df_2 = data_source.random_step_data_3()
 features_sinusoid = pd.concat([df_1], axis=0)
 
 # Combine DataSet
-features_ramp  = pd.concat([df_2], axis=0)
+features_ramp = pd.concat([df_2], axis=0)
 
-print(features_ramp)
-
-print(features_sinusoid)
+#print(features_ramp)
 
 
 # Assume X_train, y_train, X_test, y_test are your data
-X_train_o, y_train = train_test_split(features_sinusoid[['Diameter', 'Setpoint', 'Preform_Idler_Speed']],
-                                                        features_sinusoid[['Measured_rpm_Filtered']], test_size=0.1,
-                                                        random_state=42, shuffle=False)
+X_train_o, X_dummy, y_train, y_dummy = train_test_split(features_sinusoid[['Diameter','Setpoint','Preform_Idler_Speed']], features_sinusoid[['Measured_rpm_Filtered']], test_size=1, random_state=42, shuffle=False)
+
+X_test_o, X_dummy02, y_test, y_dummy02 = train_test_split(features_ramp[['Diameter','Setpoint','Preform_Idler_Speed']], features_ramp[['Measured_rpm_Filtered']], test_size=1, random_state=42, shuffle=False)
 
 
-X_test_o, y_test = train_test_split(features_ramp[['Diameter', 'Setpoint', 'Preform_Idler_Speed']],
-                                                        features_ramp[['Measured_rpm_Filtered']], test_size=0.1,
-                                                        random_state=42, shuffle=False)
+#print(X_test_o)
+#print(y_test)
 
-
-# Normalize the Data
+#Normalize the Data
 scaler = preprocessing.StandardScaler().fit(X_train_o)
 X_train = scaler.transform(X_train_o)
 scaler_2 = preprocessing.StandardScaler().fit(X_test_o)
 X_test = scaler_2.transform(X_test_o)
 
+
+
+
+
+
 # Load Previously saved models
-# agent.load_models()
+agent.load_models()
 
 start_time = time.time()
 
@@ -92,11 +95,20 @@ predictions = []
 correctPredictions = 0
 totalPredictions = 0
 
+
+
+
+
 for epoch in range(num_epochs):
     score = 0
     counter = 0
+
+    #print(X_train.values)
+
     for state, act in zip(X_train.values[:-1], y_train.values[:-1]):
         # Change State list into a Numpy Array
+
+
         state = np.array(state)
         state = np.array(state, dtype=np.float32)
 
@@ -104,7 +116,7 @@ for epoch in range(num_epochs):
         action = agent.choose_action(state)
         # action = np.mean(y_train.values)*action*2 + np.std(y_train.values)*2
         # d = np.array(y_train.max())-np.array(y_train.min())
-        d = 250 - 50  # Hard coded max and minimum range of the spooling motor
+        d = 220 - 40  # Hard coded max and minimum range of the spooling motor
         action = ((action + 0.4) / 0.75) * d + np.array(y_train.min())
         # print('max', y_train.max(), 'min', y_train.min())
         # input()
@@ -160,12 +172,12 @@ for epoch in range(num_epochs):
 
 filename = 'DDPG Training_Avg Error vs Time .png'
 plotLearning(score_history, filename, window=100)
-plotRPMandPrediction(rpms, predictions, filename="RPM and Predicted RPMs", window=100)
+plotRPMandPrediction(rpms, predictions, filename="RPM and Predicted RPMs_I3", window=100)
 
 end_time = time.time()
 duration = (end_time - start_time) / 60
 print("Time taken to train the model", duration, "mins")
 
 # Save the model
-agent.save_models()
+#agent.save_models()
 

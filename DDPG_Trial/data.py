@@ -57,10 +57,10 @@ class Import_Data(object):
 ###########################################GAZI MODS###############################################################################################
     def sinusoid_data_3(self):
         csv_file_path_1 = r"C:\Users\sakib\Documents\DRL_Test_Algorithms\training data\12_23_data\Sinusoid\Freq_.05_15min.CSV" # Replace with the actual path to your Excel file
-        df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, nrows=60000) # Load the Excel sheet, excluding the specified column
+        df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[5, 7, 8, 9], nrows=90000) # Load the Excel sheet, excluding the specified column
         return df_1
 
     def random_step_data_3(self):
         csv_file_path_1 = r"C:\Users\sakib\Documents\DRL_Test_Algorithms\training data\12_23_data\Ramp_test_data_85\ramp_test_16min.CSV" # Replace with the actual path to your Excel file
-        df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, nrows=60000) # Load the Excel sheet, excluding the specified column
+        df_1 = pd.read_csv(csv_file_path_1, skiprows=13, header=0, usecols=[3, 4, 6, 7], nrows=60000) # Load the Excel sheet, excluding the specified column
         return df_1
